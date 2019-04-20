@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Awesome-Charts</title>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.js"></script>
+    </head>
+    <body>
+        <div id="chart-wrapper">
+            <canvas id="myChart" width="400" height="400"></canvas>
+        </div>
+    <script>
+        let ctx = document.getElementById("myChart").getContext("2d");
+        let myChart = new Chart(ctx, {{ . }});
+    </script>
+    </body>
+
+</html>

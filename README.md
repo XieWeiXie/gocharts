@@ -1,2 +1,2 @@
-# goCharts
+# GoCharts
 
