@@ -1,7 +1,11 @@
-package configuration
+package options
 
-type DefaultGlobal struct {
+type DefaultGlobalOption struct {
 	Animation // 动画
 	LayOut    // 布局
 	Legend    // 图例
+	Title     // 标题
+	ToolTip   // 提示
+	Elements  // 元素
+	Scales    // 坐标轴
 }

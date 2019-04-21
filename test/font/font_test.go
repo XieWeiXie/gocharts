@@ -11,8 +11,8 @@ import (
 )
 
 func TestFont(test *testing.T) {
-	var f configuration.Font
-	f = configuration.Font{
+	var f options.Font
+	f = options.Font{
 		Size: 10,
 	}
 

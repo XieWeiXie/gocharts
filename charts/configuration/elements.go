@@ -1,4 +1,4 @@
-package configuration
+package options
 
 type Elements struct {
 	PointOfElements
@@ -10,7 +10,7 @@ type Elements struct {
 type PointOfElements struct {
 	Radius           int    `json:"radius"`
 	PointStyle       string `json:"pointStyle"`
-	style            PointOfElements
+	style            PointOfElementStyle
 	Rotation         int    `json:"rotation"`
 	BackgroundColor  string `json:"backgroundColor"`
 	backColor        Color

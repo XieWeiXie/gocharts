@@ -2,12 +2,9 @@ package main
 
 import (
 	"fmt"
-	"html/template"
 	"net/http"
-	"os"
-	"path/filepath"
 
-	"github.com/wuxiaoxiaoshen/gocharts/charts"
+	"github.com/wuxiaoxiaoshen/gocharts/charts/line"
 )
 
 type My struct {
@@ -15,22 +12,13 @@ type My struct {
 }
 
 func main() {
-	data := charts.DefaultChartsBase
-	data.SetLabels([]string{"red", "blue", "yellow"})
-	content, err := data.JsonMarshal()
-	if err != nil {
-		return
-	}
-	fmt.Println(string(content))
-	var m My
-	m.Charts = content
-	fmt.Println(filepath.Abs("template/plot.html"))
-	currentPath, _ := os.Getwd()
-	plot := filepath.Join(currentPath, "github.com/wuxiaoxiaoshen/gocharts/template/plot.html")
-	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
-		tpl, _ := template.ParseFiles(plot)
-		tpl.Execute(writer, data)
-	})
+
+	chart := line.ChartLine("line", []string{"折线图示例"})
+	chart.SetLabels([]string{"Red", "Blue", "Yellow", "Green", "Purple", "Orange"})
+	chart.AddDataSet(*chart.NewDataSet("# of votes", []interface{}{12, 19, 3, 5, 2, 3}))
+	fmt.Println(chart)
+
+	http.HandleFunc("/", chart.Plot())
 	http.ListenAndServe(":8888", nil)
 
 }

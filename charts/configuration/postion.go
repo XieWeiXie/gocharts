@@ -1,4 +1,4 @@
-package configuration
+package options
 
 type Position struct {
 }
