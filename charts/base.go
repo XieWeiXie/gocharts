@@ -31,8 +31,8 @@ type Data struct {
 }
 
 type DataSets struct {
-	Type            string        `json:"type"`
-	Label           string        `json:"label"`
+	Type            string        `json:"type,omitempty"`
+	Label           string        `json:"label,omitempty"`
 	Data            []interface{} `json:"data"`
 	BackgroundColor []string      `json:"backgroundColor,omitempty"`
 	BorderColor     []string      `json:"borderColor,omitempty"`
@@ -47,8 +47,8 @@ func (base *Base) SetLabels(labels []interface{}) {
 	base.Data.Labels = labels
 }
 
-func (base *Base) AddDataSet(dataSets DataSets) {
-	base.DataSets = append(base.DataSets, dataSets)
+func (base *Base) AddDataSet(dataSets ...DataSets) {
+	base.DataSets = append(base.DataSets, dataSets...)
 }
 
 func (base *Base) AddOptions(key string, values interface{}) {

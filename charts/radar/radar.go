@@ -7,6 +7,8 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/wuxiaoxiaoshen/gocharts/charts/options"
+
 	"github.com/wuxiaoxiaoshen/gocharts/charts"
 )
 
@@ -31,13 +33,16 @@ func ChartRadar(title []string) *Radar {
 }
 
 func (r *Radar) setTitle() {
-	r.Options["title"] = r.Title
+	r.Options["title"] = options.Title{
+		Display: true,
+		Text:    r.Title,
+	}
 }
 
 func (r *Radar) Plot() func(writer http.ResponseWriter, request *http.Request) {
 	path, _ := os.Getwd()
 	plot := filepath.Join(path, "github.com/wuxiaoxiaoshen/gocharts/template/plot.html")
-	log.Println("Server on: http://localhost" + "/" + r.Type)
+	log.Println("Server on: http://localhost:port" + "/" + r.Type)
 	return func(writer http.ResponseWriter, request *http.Request) {
 		tpl, _ := template.ParseFiles(plot)
 		tpl.Execute(writer, r)

@@ -1,4 +1,4 @@
-package bar
+package bubble
 
 import (
 	"html/template"
@@ -11,38 +11,43 @@ import (
 	"github.com/wuxiaoxiaoshen/gocharts/charts/options"
 )
 
-type Bar struct {
+type Bubble struct {
 	charts.Base
 }
 
-type OptionOfBar struct {
+type OptionOfBubble struct {
 }
 
-func ChartBar(title []string) *Bar {
-	bar := &Bar{
+type Point struct {
+	X int `json:"x"`
+	Y int `json:"y"`
+	R int `json:"r"`
+}
+
+func ChartBubble(title []string) *Bubble {
+	bubble := &Bubble{
 		charts.Base{
-			Type:  charts.ChartTypes[charts.Bar],
+			Type:  charts.ChartTypes[charts.Bubble],
 			Title: title,
 		},
 	}
-	bar.Options = make(map[string]interface{})
-	bar.setTitle()
-	return bar
-
+	bubble.Options = make(map[string]interface{})
+	bubble.setTitle()
+	return bubble
 }
 
-func (b *Bar) setTitle() {
+func (b *Bubble) setTitle() {
 	b.Options["title"] = options.Title{
 		Display: true,
 		Text:    b.Title,
 	}
 }
 
-func (b *Bar) TypeName() string {
-	return b.Type
+func (b *Bubble) AddPoints() {
+
 }
 
-func (b Bar) Plot() func(writer http.ResponseWriter, request *http.Request) {
+func (b Bubble) Plot() func(writer http.ResponseWriter, request *http.Request) {
 	path, _ := os.Getwd()
 	plot := filepath.Join(path, "github.com/wuxiaoxiaoshen/gocharts/template/plot.html")
 	log.Println("Server on: http://localhost:port" + "/" + b.Type)
@@ -50,7 +55,4 @@ func (b Bar) Plot() func(writer http.ResponseWriter, request *http.Request) {
 		tpl, _ := template.ParseFiles(plot)
 		tpl.Execute(writer, b)
 	}
-
 }
-
-func (b Bar) Save(fileName string) {}

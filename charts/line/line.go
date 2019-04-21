@@ -44,7 +44,7 @@ func (l *Line) SetScales(scales options.Scales) {
 func (l Line) Plot() func(writer http.ResponseWriter, request *http.Request) {
 	path, _ := os.Getwd()
 	plot := filepath.Join(path, "github.com/wuxiaoxiaoshen/gocharts/template/plot.html")
-	log.Println("Server on: http://localhost" + "/" + l.Type)
+	log.Println("Server on: http://localhost:port" + "/" + l.Type)
 	return func(writer http.ResponseWriter, request *http.Request) {
 		tpl, _ := template.ParseFiles(plot)
 		tpl.Execute(writer, l)
