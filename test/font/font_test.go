@@ -2,10 +2,9 @@ package font
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"testing"
-
-	"github.com/gin-gonic/gin/json"
 
 	"github.com/wuxiaoxiaoshen/gocharts/charts/configuration"
 )
