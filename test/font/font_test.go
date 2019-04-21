@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/wuxiaoxiaoshen/gocharts/charts/configuration"
+	"github.com/wuxiaoxiaoshen/gocharts/charts/options"
 )
 
 func TestFont(test *testing.T) {

@@ -8,11 +8,11 @@ import (
 )
 
 type Font struct {
-	Size   int    `json:"fontSize"`
-	Family string `json:"fontFamily"`
-	Color  string `json:"fontColor"`
-	Style  string `json:"fontStyle"`
-	color  Color  `json:"color"`
+	Size   int    `json:"fontSize,omitempty"`
+	Family string `json:"fontFamily,omitempty"`
+	Color  string `json:"fontColor,omitempty"`
+	Style  string `json:"fontStyle,omitempty"`
+	color  Color  `json:"color,omitempty"`
 }
 
 func (F Font) TitleFont() interface{} {

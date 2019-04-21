@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 
 	"github.com/wuxiaoxiaoshen/gocharts/charts"
-	"github.com/wuxiaoxiaoshen/gocharts/charts/configuration"
+	"github.com/wuxiaoxiaoshen/gocharts/charts/options"
 )
 
 type Line struct {
@@ -18,10 +18,10 @@ type Line struct {
 type OptionOfLine struct {
 }
 
-func ChartLine(typ string, title []string) *Line {
+func ChartLine(title []string) *Line {
 	line := &Line{
 		Base: charts.Base{
-			Type:  typ,
+			Type:  charts.ChartTypes[charts.Line],
 			Title: title,
 		},
 	}
@@ -37,15 +37,17 @@ func (l *Line) setTitle() {
 	}
 }
 
+func (l *Line) SetScales(scales options.Scales) {
+	l.Options["scales"] = scales
+}
+
 func (l Line) Plot() func(writer http.ResponseWriter, request *http.Request) {
 	path, _ := os.Getwd()
 	plot := filepath.Join(path, "github.com/wuxiaoxiaoshen/gocharts/template/plot.html")
-	log.Println(path, plot)
+	log.Println("Server on: http://localhost" + "/" + l.Type)
 	return func(writer http.ResponseWriter, request *http.Request) {
 		tpl, _ := template.ParseFiles(plot)
 		tpl.Execute(writer, l)
 	}
 
 }
-
-func (l Line) Save(fileName string) {}

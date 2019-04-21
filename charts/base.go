@@ -4,16 +4,17 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/wuxiaoxiaoshen/gocharts/charts/configuration"
+	"github.com/wuxiaoxiaoshen/gocharts/charts/options"
 )
 
 type Charts interface {
 	Plot() func(writer http.ResponseWriter, request *http.Request)
 	Save(fileName string)
+	TypeName() string
 }
 
 const (
-	defaultAlpha       = 0.2
+	defaultAlpha       = 0.9
 	defaultBorderWidth = 1
 )
 
@@ -25,8 +26,8 @@ type Base struct {
 }
 
 type Data struct {
-	Labels   []string   `json:"labels"`
-	DataSets []DataSets `json:"datasets"`
+	Labels   []interface{} `json:"labels"`
+	DataSets []DataSets    `json:"datasets"`
 }
 
 type DataSets struct {
@@ -42,7 +43,7 @@ type DataSets struct {
 
 type Options map[string]interface{}
 
-func (base *Base) SetLabels(labels []string) {
+func (base *Base) SetLabels(labels []interface{}) {
 	base.Data.Labels = labels
 }
 
@@ -55,16 +56,13 @@ func (base *Base) AddOptions(key string, values interface{}) {
 }
 
 func (base Base) NewDataSet(label string, data []interface{}) *DataSets {
-	//color, borderColor := options.RandomColorBoth(len(data), defaultAlpha)
-	color := options.Color{
-		RGB: "rgb(54,162,235)",
-	}
-	colorAlpha := color.Alpha(0.2)
+	color, borderColor := options.RandomColorBoth(len(data), defaultAlpha)
+
 	dataSets := &DataSets{
 		Label:           label,
 		Data:            data,
-		BackgroundColor: []string{color.String()},
-		BorderColor:     []string{colorAlpha},
+		BackgroundColor: color,
+		BorderColor:     borderColor,
 		BorderWidth:     defaultBorderWidth,
 	}
 	return dataSets
@@ -98,3 +96,9 @@ func (base *Base) setBorderWidth(width int) {
 		base.DataSets[index].BorderWidth = borderWidth
 	}
 }
+
+func (base *Base) TypeName() string {
+	return base.Type
+}
+
+func (base *Base) Save(fileName string) {}
